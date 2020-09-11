@@ -33,33 +33,34 @@ if __name__ == '__main__':
     # (班级, 课程号, 教师号)
     schedules = []
 
-    schedules.append(Schedule(1202, 202, 11102))
-    schedules.append(Schedule(1202, 202, 11102))
-    schedules.append(Schedule(1202, 202, 11102))
-    schedules.append(Schedule(1202, 202, 11102))
-    schedules.append(Schedule(1202, 204, 11104))
-    schedules.append(Schedule(1202, 204, 11104))
-    schedules.append(Schedule(1202, 206, 11106))
-    schedules.append(Schedule(1202, 206, 11106))
+    schedules.append(Schedule(1202, 202, 11102, [201,202,203]))
+    schedules.append(Schedule(1202, 202, 11102, [201,202,203]))
+    schedules.append(Schedule(1202, 202, 11102, [201,202,203]))
+    schedules.append(Schedule(1202, 202, 11102, [201,202,203]))
+    schedules.append(Schedule(1202, 204, 11104, [201,202,203]))
+    schedules.append(Schedule(1202, 204, 11104, [201,202,203]))
+    schedules.append(Schedule(1202, 206, 11106, [201,202,203]))
+    schedules.append(Schedule(1202, 206, 11106, [201,202,203]))
 
-    schedules.append(Schedule(1203, 203, 11103))
-    schedules.append(Schedule(1203, 203, 11103))
-    schedules.append(Schedule(1203, 204, 11104))
-    schedules.append(Schedule(1203, 204, 11104))
-    schedules.append(Schedule(1203, 205, 11105))
-    schedules.append(Schedule(1203, 205, 11105))
-    schedules.append(Schedule(1203, 206, 11106))
-    schedules.append(Schedule(1203, 206, 11106))
+    schedules.append(Schedule(1203, 203, 11103, [201,202,203]))
+    schedules.append(Schedule(1203, 203, 11103, [201,202,203]))
+    schedules.append(Schedule(1203, 204, 11104, [201,202,203]))
+    schedules.append(Schedule(1203, 204, 11104, [201,202,203]))
+    schedules.append(Schedule(1203, 205, 11105, [201,202,203]))
+    schedules.append(Schedule(1203, 205, 11105, [201,202,203]))
+    schedules.append(Schedule(1203, 206, 11106, [201,202,203]))
+    schedules.append(Schedule(1203, 206, 11106, [201,202,203]))
 
     # GA算法优化
     ga = GeneticOptimize(popsize=50, elite=10, maxiter=500)
-    res = ga.evolution(schedules, 3)
+    #res = ga.evolution(schedules, 3)
+    res = ga.evolution(schedules)
 
     # ID与名称映射
     className = {1202: "机器人1802", 1203: "机器人1801"}
     courseName = {202: "幼师英语", 204: "美术", 206:"舞蹈", 203:"钢琴", 205:"声乐"}
     teacherName = {11102:"李宝田", 11104: "宝田李", 11106:"李田保", 11103:"巴拉巴拉", 11105:"啊吧啊吧"}
-    roomName = {1:"一教201", 2:"一教202",3:"一教203"}
+    #roomName = {1:"一教201", 2:"一教202",3:"一教203"}
 
     # 打印结果表格
     new_dict = {}
@@ -68,7 +69,7 @@ if __name__ == '__main__':
         r.classId = className[classId]
         r.courseId = courseName[r.courseId]
         r.teacherId = teacherName[r.teacherId]
-        r.roomId = roomName[r.roomId]
+        #r.roomId = roomName[r.roomId]
         if classId in new_dict:
             new_dict[classId].append(r)
         else:

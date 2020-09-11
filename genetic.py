@@ -17,7 +17,8 @@ class GeneticOptimize:
         # 最大进化(重复)次数
         self.maxiter = maxiter
 
-    def init_population(self, schedules, roomRange):
+    #def init_population(self, schedules, roomRange):
+    def init_population(self, schedules):
         """ 随机初始化不同的种群
 
         参数:
@@ -32,13 +33,15 @@ class GeneticOptimize:
             entity = []
 
             for s in schedules:
-                s.random_init(roomRange)
+                #s.random_init(roomRange)
+                s.random_init()
                 entity.append(copy.deepcopy(s))
 
             # 添加种群
             self.population.append(entity)
 
-    def mutate(self, eiltePopulation, roomRange):
+    #def mutate(self, eiltePopulation, roomRange):
+    def mutate(self, eiltePopulation):
         """ 变异操作
 
         参数:
@@ -58,7 +61,21 @@ class GeneticOptimize:
             operation = np.random.rand()
 
             if pos == 0:
-                p.roomId = self.addSub(p.roomId, operation, roomRange)
+                #p.roomId = self.addSub(p.roomId, operation, roomRange)
+                value = p.roomIndex
+                if operation > 0.5:
+                    if value < len(p.rooms)-1:
+                        value += 1
+                    else:
+                        value -= 1
+                else:
+                    if value - 1 >= 0:
+                        value -= 1
+                    else:
+                        value += 1
+                p.roomIndex = value
+                p.roomId = p.rooms[value]
+
             if pos == 1:
                 p.weekDay = self.addSub(p.weekDay, operation, 5)
             if pos == 2:
@@ -116,7 +133,8 @@ class GeneticOptimize:
 
         return ep1
 
-    def evolution(self, schedules, roomRange):
+    #def evolution(self, schedules, roomRange):
+    def evolution(self, schedules):
         """ 进化
         
         参数:
@@ -133,7 +151,8 @@ class GeneticOptimize:
         bestSchedule = None # 最佳课表
 
         # 随机初始化不同种群
-        self.init_population(schedules, roomRange)
+        #self.init_population(schedules, roomRange)
+        self.init_population(schedules)
 
         for i in range(self.maxiter):
             eliteIndex, bestScore = schedule_cost(self.population, self.elite)
@@ -151,7 +170,8 @@ class GeneticOptimize:
             while len(newPopulation) < self.popsize:
                 if np.random.rand() < self.mutprob:
                     # 突变
-                    newp = self.mutate(newPopulation, roomRange)
+                    #newp = self.mutate(newPopulation, roomRange)
+                    newp = self.mutate(newPopulation)
                 else:
                     # 交叉
                     newp = self.crossover(newPopulation)

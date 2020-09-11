@@ -8,31 +8,37 @@ class Schedule:
         包含了课程、班级、教师、教室、星期、时间几个属性
         其中前三个是我们自定义的，后三个是需要算法来优化
     """
-    def __init__(self, classId, courseId, teacherId):
+    def __init__(self, classId, courseId, teacherId, rooms):
         """Init
         参数:
-            courseId:  int, 课程ID.
-            classId:   int, 班级ID.
-            teacherId: int, 教师ID.
+            courseId:  int, 课程ID
+            classId:   int, 班级ID
+            teacherId: int, 教师ID
+            rooms:     List,可选教室
         """
         self.courseId = courseId
         self.classId = classId
         self.teacherId = teacherId
+        self.rooms = rooms
 
         # 教室ID
+        self.roomIndex = 0
         self.roomId = 0
         # 星期
         self.weekDay = 0
         # 时间
         self.slot = 0
 
-    def random_init(self, roomRange):
+    #def random_init(self, roomRange):
+    def random_init(self):
         """ 随机初始化
 
         参数:
             roomSize: int, 教室数量.
         """
-        self.roomId = np.random.randint(1, roomRange + 1, 1)[0]
+        #self.roomId = np.random.randint(1, roomRange + 1, 1)[0]
+        self.roomIndex = np.random.randint(0, len(self.rooms) - 1, 1)[0]
+        self.roomId = self.rooms[self.roomIndex]
         self.weekDay = np.random.randint(1, 6, 1)[0]
         self.slot = np.random.randint(1, 6, 1)[0]
 
